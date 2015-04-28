@@ -1,0 +1,22 @@
+{
+  "name": "dev-shop-backend",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/fskinner/dev-shop-backend.git"
+  },
+  "author": "Felipe Skinner",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/fskinner/dev-shop-backend/issues"
+  },
+  "homepage": "https://github.com/fskinner/dev-shop-backend#readme",
+  "dependencies": {
+    "express": "^4.12.3"
+  }
+}
