@@ -1,0 +1,70 @@
+<!doctype html>
+
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+
+  <title>DevShop Example</title>
+  <meta name="description" content="DevShop Example">
+  <meta name="author" content="fskinner">
+
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+  <link rel="stylesheet" href="css/styles.css?v=1.0">
+
+  <!--[if lt IE 9]>
+  <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+  <![endif]-->
+</head>
+
+<body>
+  <section ng-app="devshop" class="col-xs-12 col-sm-6 col-md-8">
+    <header>
+      <h1>Dev Shop</h1>
+    </header>
+
+    <section ng-controller="UserCtrl as user">
+      <h1 class="lead">Add a developer</h1>
+      <form class="form-inline">
+        <div class="form-group">
+          <input type="text" class="form-control" placeholder="GitHub Username">
+        </div>
+        <div class="form-group">
+          <input type="text" class="form-control" placeholder="Price">
+        </div>
+        <button type="submit" class="btn btn-success">Add</button>
+      </form>
+    </section>
+
+    <section ng-controller="CartCtrl as cart">
+      <h1 class="lead">Cart</h1>
+      <div class="table-responsive">
+        <table class="table">
+          <thead>
+            <tr>
+              <th>Username</th>
+              <th>Price</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>brenoc</td>
+              <td>$224</td>
+              <td><button type="button" class="btn btn-danger">Remove</button></td>
+            </tr>
+            <tr>
+              <td>firstdoit</td>
+              <td>$416</td>
+              <td><button type="button" class="btn btn-danger">Remove</button></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+  </section>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.3.15/angular.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.3.15/angular-sanitize.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.2.14/angular-ui-router.min.js"></script>
+  <script src="js/scripts.js"></script>
+</body>
+</html>
