@@ -18,5 +18,8 @@
   "homepage": "https://github.com/fskinner/dev-shop-backend#readme",
   "dependencies": {
     "express": "^4.12.3"
+  },
+  "devDependencies": {
+    "body-parser": "^1.12.3"
   }
 }
