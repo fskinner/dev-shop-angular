@@ -19,6 +19,29 @@ app.use(function(req, res, next) {
 });
 
 var users = [];
+users = [
+  {username: "joao",    price: "100", photo: "default.png"},
+  {username: "jorge",   price: "121", photo: "default.png"},
+  {username: "pedro",   price: "97",  photo: "default.png"},
+  {username: "paulo",   price: "290", photo: "default.png"},
+  {username: "tom",     price: "111", photo: "default.png"},
+  {username: "tomas",   price: "22",  photo: "default.png"},
+  {username: "thiago",  price: "35",  photo: "default.png"},
+  {username: "tereza",  price: "198", photo: "default.png"},
+  {username: "sofia",   price: "230", photo: "default.png"},
+  {username: "luke",    price: "210", photo: "default.png"},
+  {username: "maria",   price: "100", photo: "default.png"},
+  {username: "eduarda", price: "121", photo: "default.png"},
+  {username: "renato",  price: "97",  photo: "default.png"},
+  {username: "flavio",  price: "290", photo: "default.png"},
+  {username: "alex",    price: "111", photo: "default.png"},
+  {username: "tobias",  price: "22",  photo: "default.png"},
+  {username: "daniel",  price: "35",  photo: "default.png"},
+  {username: "pelé",    price: "198", photo: "default.png"},
+  {username: "orlando", price: "230", photo: "default.png"},
+  {username: "léia",    price: "210", photo: "default.png"}
+]
+
 var currentId = 1;
 
 app.post('/users', function (req, res) {
