@@ -2,6 +2,7 @@
   'use strict';
 
   angular.module('devshop').controller('ShopCtrl', function(){
+
     var vm = this;
 
     this.add = function() {
@@ -11,16 +12,21 @@
 
       vm.developers.push(developer);
       clearInputFields();
-    }
+
+      vm.total += parseInt(developer.price, 10);
+    };
 
     this.remove = function(developer) {
       var index = vm.developers.indexOf(developer);
       vm.developers.splice(index, 1);
-    }
+
+      vm.total -= parseInt(developer.price, 10);
+    };
 
     function init() {
       vm.developers = [];
-      var priceTotal = 0;
+      vm.total = 0;
+
       clearInputFields();
     }
 
@@ -30,5 +36,6 @@
     }
 
     init();
+
   });
 })();
