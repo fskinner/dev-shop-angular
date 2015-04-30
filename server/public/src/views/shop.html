@@ -1,0 +1,48 @@
+<header>
+  <h1>Dev Shops</h1>
+</header>
+
+<section>
+  <h1 class="lead">Add a developer</h1>
+  <form class="form-inline" ng-submit="shop.add()">
+    <div class="form-group">
+      <input type="text" class="form-control" placeholder="GitHub Username" ng-model="shop.username" ng-model-options="{ debounce: 250 }">
+    </div>
+    <div class="form-group">
+      <input type="text" class="form-control" placeholder="Price" ng-model="shop.price" ng-model-options="{ debounce: 150 }">
+    </div>
+    <button type="submit" class="btn btn-success">Add</button>
+  </form>
+</section>
+
+<section>
+  <h1 class="lead">Cart</h1>
+  <div class="table-responsive" ng-if="shop.developers.length !== 0">
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Username</th>
+          <th>Price</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr ng-repeat="developer in shop.developers">
+          <td>{{::developer.username}}</td>
+          <td>${{::developer.price}}</td>
+          <td><button type="button" class="btn btn-danger" ng-click="shop.remove(developer)">Remove</button></td>
+        </tr>
+      </tbody>
+      <tfoot>
+        <tr>
+          <td>Total</td>
+          <td>${{shop.total}}</td>
+          <td><a href="/checkout" class="btn btn-primary">Buy</button></td>
+        </tr>
+      </tfoot>
+    </table>
+  </div>
+
+  <div ng-if="shop.developers.length === 0">
+    Cart is empty
+  </div>
+</section>

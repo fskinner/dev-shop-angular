@@ -1,7 +1,7 @@
 (function(){
   'use strict';
 
-  angular.module('devshop').controller('ShopCtrl', function(){
+  angular.module('devshop').controller('ShopCtrl', function(ShopSvc){
 
     var vm = this;
 

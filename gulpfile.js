@@ -5,7 +5,7 @@ var browserSync = require('browser-sync');
 
 var paths = {
   source: 'server/public/src/**/*.js',
-  html: 'server/public/**/*.html'
+  html: ['server/public/**/*.html', 'server/public/src/**.*.html']
 }
 
 gulp.task('serve', function(done) {

@@ -1,15 +1,15 @@
 (function(){
   'use strict';
 
-  angular.module('devshop').factory('ShopSvc', function(){
+  angular.module('devshop').service('ShopSvc', function(){
 
+    this.save = function(developer) {
+      var params = {
+        developer: developer
+      };
+
+      return $http.post('', params);
+    };
+    
   });
 })();
-
-// this.save = function(developer) {
-//   var params = {
-//     developer: developer
-//   };
-//
-//   return $http.post('', params);
-// };
