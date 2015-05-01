@@ -32,20 +32,24 @@
     };
 
     this.getDeveloperList = function() {
-      ShopSvc.get().then(function(result){
-        result.data.map(function(item){
+      ShopSvc.get(vm.page).then(function(result){
+        result.data.developers.map(function(item){
           item.photo = 'img/'+item.photo;
           return item;
         });
 
-        vm.hireDevelopers = result.data;
+        vm.hireDevelopers = vm.hireDevelopers.concat(result.data.developers);
+        vm.hasMorePages = result.data.pagesLeft;
       });
+      vm.page++;
     };
 
     function init() {
       vm.hireDevelopers = [];
       vm.developers = [];
       vm.total = 0;
+      vm.hasMorePages = false;
+      vm.page = 1;
 
       clearInputFields();
       vm.getDeveloperList();

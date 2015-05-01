@@ -1,0 +1,35 @@
+<h1 class="lead">Cart</h1>
+<div class="table-responsive" ng-if="shop.developers.length !== 0">
+  <table class="table table-hover">
+    <thead>
+      <tr>
+        <th>Photo</th>
+        <th>Username</th>
+        <th>Price</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr ng-repeat="developer in shop.developers">
+        <td><img src="{{developer.photo}}" height="48" alt="@{{developer.username}}" title="{{developer.username}}'s photo" class="img-rounded"></td>
+        <td><a href="https://github.com/{{developer.username}}">{{developer.username}}</a></td>
+        <td>${{developer.price}}</td>
+        <td><button type="button" class="btn btn-danger pull-right" ng-click="shop.remove(developer)">Remove</button></td>
+      </tr>
+    </tbody>
+    <tfoot>
+      <tr>
+        <td>Total</td>
+        <td></td>
+        <td>${{shop.total}}</td>
+        <td><a href="/checkout" class="btn btn-primary btn-lg pull-right">Proceed to Checkout</button></td>
+      </tr>
+    </tfoot>
+  </table>
+</div>
+
+<div ng-if="shop.developers.length === 0" class="text-center">
+  <span>Your cart is empty</span>
+</div>
+
+<a href="/home" class="btn btn-default pull-left top-offset-20">Back to shopping</a>

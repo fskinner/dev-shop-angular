@@ -11,8 +11,10 @@
       return $http.post('', params);
     };
 
-    this.get = function() {
-      return $http.get('/users');
+    this.get = function(page) {
+      page = page || 1;
+      
+      return $http.get('/users?page='+page);
     };
 
   });

@@ -1,68 +1,35 @@
-<header>
-  <h1>Dev Shop</h1>
-</header>
+<h1 class="lead">Add a developer</h1>
+<table class="table table-hover" ng-if="shop.hireDevelopers.length > 0">
+  <thead>
+    <tr>
+      <th>Photo</th>
+      <th>Username</th>
+      <th>Price</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr ng-repeat="developer in shop.hireDevelopers">
+      <td><img src="{{developer.photo}}" height="48" alt="@{{developer.username}}" title="{{developer.username}}'s photo" class="img-rounded"></td>
+      <td><a href="https://github.com/{{developer.username}}">{{developer.username}}</a></td>
+      <td>${{developer.price}}</td>
+      <td>
+        <button type="button" class="btn btn-default pull-right" ng-click="shop.add(developer)" ng-hide="developer.onCart">Add to cart</button>
+        <button type="button" class="btn btn-danger pull-right" ng-click="shop.remove(developer)" ng-show="developer.onCart">Cancel</button>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<button type="button" class="btn btn-default btn-lg center-block" ng-show="shop.hasMorePages" ng-click="shop.getDeveloperList()">Load more</button>
 
-<section>
-  <h1 class="lead">Add a developer</h1>
-  <table class="table table-hover" ng-if="shop.hireDevelopers.length > 0">
-    <thead>
-      <tr>
-        <th>Photo</th>
-        <th>Username</th>
-        <th>Price</th>
-        <th></th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr ng-repeat="developer in shop.hireDevelopers">
-        <td><img src="{{developer.photo}}" height="48" alt="@{{developer.username}}" title="{{developer.username}}'s photo"></td>
-        <td><a href="https://github.com/{{developer.username}}">{{developer.username}}</a></td>
-        <td>${{developer.price}}</td>
-        <td><button type="button" class="btn btn-default" ng-click="shop.add(developer)" ng-hide="developer.onCart">Add to cart</button></td>
-      </tr>
-    </tbody>
-  </table>
-
-  <form class="form-inline" ng-submit="shop.addFromInput()" ng-if="shop.hireDevelopers.length === 0">
-    <div class="form-group">
-      <input type="text" class="form-control" placeholder="GitHub Username" ng-model="shop.username" ng-model-options="{ debounce: 250 }">
-    </div>
-    <div class="form-group">
-      <input type="text" class="form-control" placeholder="Price" ng-model="shop.price" ng-model-options="{ debounce: 150 }">
-    </div>
-    <button type="submit" class="btn btn-success">Add</button>
-  </form>
-</section>
-
-<section>
-  <h1 class="lead">Cart</h1>
-  <div class="table-responsive" ng-if="shop.developers.length !== 0">
-    <table class="table table-hover">
-      <thead>
-        <tr>
-          <th>Username</th>
-          <th>Price</th>
-          <th></th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr ng-repeat="developer in shop.developers">
-          <td>{{::developer.username}}</td>
-          <td>${{::developer.price}}</td>
-          <td><button type="button" class="btn btn-danger" ng-click="shop.remove(developer)">Remove</button></td>
-        </tr>
-      </tbody>
-      <tfoot>
-        <tr>
-          <td>Total</td>
-          <td>${{shop.total}}</td>
-          <td><a href="/checkout" class="btn btn-primary">Buy</button></td>
-        </tr>
-      </tfoot>
-    </table>
+<form class="form-inline" ng-submit="shop.addFromInput()" ng-if="shop.hireDevelopers.length === 0">
+  <div class="form-group">
+    <input type="text" class="form-control" placeholder="GitHub Username" ng-model="shop.username" ng-model-options="{ debounce: 250 }">
   </div>
-
-  <div ng-if="shop.developers.length === 0">
-    Your cart is empty
+  <div class="form-group">
+    <input type="text" class="form-control" placeholder="Price" ng-model="shop.price" ng-model-options="{ debounce: 150 }">
   </div>
-</section>
+  <button type="submit" class="btn btn-success">Add</button>
+</form>
+
+<a href="/cart" class="btn btn-primary btn-lg pull-right top-offset-20">Go to cart</a>

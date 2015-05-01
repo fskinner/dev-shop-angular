@@ -53,7 +53,13 @@ app.post('/users', function (req, res) {
 });
 
 app.get('/users', function (req, res) {
-  res.json(users);
+  var page = req.query.page - 1 || 0;
+  var perPage = req.query.per_page || 5;
+  var current = page*perPage;
+
+  var usersPage = users.slice(current, perPage + current);
+
+  res.json({developers: usersPage, pagesLeft: perPage + current < users.length});
 });
 
 app.delete('/users/:id', function (req, res) {
