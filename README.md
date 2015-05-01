@@ -8,8 +8,8 @@
 ## Running
 
 1. Start the server `npm start`
-- Open browser at http://localhost:3000
+- Open browser at [Localhost](http://localhost:3000)
 
 ## Web
 
-You can view the project up and running on `https://fskinner-dev-shop.herokuapp.com/`
+You can view the project up and running on [Heroku](https://fskinner-dev-shop.herokuapp.com)
