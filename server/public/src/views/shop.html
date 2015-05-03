@@ -1,35 +1,43 @@
 <h1 class="lead">Add a developer</h1>
-<table class="table table-hover" ng-if="shop.hireDevelopers.length > 0">
-  <thead>
-    <tr>
-      <th>Photo</th>
-      <th>Username</th>
-      <th>Price</th>
-      <th></th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr ng-repeat="developer in shop.hireDevelopers">
-      <td><img src="{{developer.photo}}" height="48" alt="@{{developer.username}}" title="{{developer.username}}'s photo" class="img-rounded"></td>
-      <td><a href="https://github.com/{{developer.username}}">{{developer.username}}</a></td>
-      <td>${{developer.price}}</td>
-      <td>
-        <button type="button" class="btn btn-default pull-right" ng-click="shop.add(developer)" ng-hide="developer.onCart">Add to cart</button>
-        <button type="button" class="btn btn-danger pull-right" ng-click="shop.remove(developer)" ng-show="developer.onCart">Cancel</button>
-      </td>
-    </tr>
-  </tbody>
-</table>
-<button type="button" class="btn btn-default btn-lg center-block" ng-show="shop.hasMorePages" ng-click="shop.getDeveloperList()">Load more</button>
 
-<form class="form-inline" ng-submit="shop.addFromInput()" ng-if="shop.hireDevelopers.length === 0">
-  <div class="form-group">
-    <input type="text" class="form-control" placeholder="GitHub Username" ng-model="shop.username" ng-model-options="{ debounce: 250 }">
-  </div>
-  <div class="form-group">
-    <input type="text" class="form-control" placeholder="Price" ng-model="shop.price" ng-model-options="{ debounce: 150 }">
-  </div>
-  <button type="submit" class="btn btn-success">Add</button>
-</form>
+<div class="top-offset-20" ng-if="shop.hireDevelopers.length > 0">
+  <table class="table table-hover">
+    <thead>
+      <tr>
+        <th>Photo</th>
+        <th>Username</th>
+        <th>Price</th>
+        <th>Hours amount</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr ng-repeat="developer in shop.hireDevelopers">
+        <td><img src="{{developer.photo}}" height="48" alt="@{{developer.username}}" title="{{developer.username}}'s photo" class="img-rounded"></td>
+        <td><a href="https://github.com/{{developer.username}}">{{developer.username}}</a></td>
+        <td>${{developer.price}}</td>
+        <td><input type="number" class="col-md-3" value="{{developer.hours}}" ng-model="developer.hours" ng-model-options="{ debounce: 100 }"></td>
+        <td>
+          <button type="button" class="btn btn-default pull-right" ng-click="shop.add(developer)" ng-hide="developer.onCart">Add to cart</button>
+          <button type="button" class="btn btn-danger pull-right" ng-click="shop.remove(developer)" ng-show="developer.onCart">Cancel</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <button type="button" class="btn btn-default btn-lg center-block" ng-show="shop.hasMorePages" ng-click="shop.getDeveloperList()">Load more</button>
+</div>
+
+<div class="top-offset-20" ng-if="shop.hireDevelopers.length === 0">
+  <div>No developers found. Try changing your filter or add by name: </div>
+  <form class="form-inline" ng-submit="shop.addFromInput()">
+    <div class="form-group">
+      <input type="text" class="form-control" placeholder="GitHub Username" ng-model="shop.username" ng-model-options="{ debounce: 250 }">
+    </div>
+    <div class="form-group">
+      <input type="text" class="form-control" placeholder="Price" ng-model="shop.price" ng-model-options="{ debounce: 150 }">
+    </div>
+    <button type="submit" class="btn btn-success">Add</button>
+  </form>
+</div>
 
 <a href="/cart" class="btn btn-primary btn-lg pull-right top-offset-20">Go to cart</a>

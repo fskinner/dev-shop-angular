@@ -13,7 +13,7 @@
       <tr ng-repeat="developer in shop.developers">
         <td><img src="{{developer.photo}}" height="48" alt="@{{developer.username}}" title="{{developer.username}}'s photo" class="img-rounded"></td>
         <td><a href="https://github.com/{{developer.username}}">{{developer.username}}</a></td>
-        <td>${{developer.price}}</td>
+        <td>${{developer.price * developer.hours}} (${{developer.price}} x {{developer.hours}}h)</td>
         <td><button type="button" class="btn btn-danger pull-right" ng-click="shop.remove(developer)">Remove</button></td>
       </tr>
     </tbody>

@@ -6,10 +6,15 @@
     var vm = this;
 
     this.add = function(developer) {
-      vm.developers.push(developer);
-      developer.onCart = true;
+      if(developer.hours > 0){
+        vm.developers.push(developer);
+        developer.onCart = true;
 
-      addToTotal(developer.price);
+        var totalDevPrice = developer.price * developer.hours;
+
+        addToTotal(totalDevPrice);
+      }
+
     };
 
     this.addFromInput = function() {
@@ -28,13 +33,15 @@
       vm.developers.splice(index, 1);
       developer.onCart = false;
 
-      vm.total -= parseInt(developer.price, 10);
+      var totalDevPrice = developer.price * developer.hours;
+      vm.total -= parseInt(totalDevPrice, 10);
     };
 
     this.getDeveloperList = function() {
       ShopSvc.get(vm.page).then(function(result){
         result.data.developers.map(function(item){
           item.photo = 'img/'+item.photo;
+          item.hours = 8;
           return item;
         });
 
