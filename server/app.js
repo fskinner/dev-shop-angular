@@ -51,6 +51,7 @@ app.get('/org/:org/users', function (req, res) {
     users = [];
     var devs = JSON.parse(response.body);
 
+    if(devs.constructor !== Array) devs = [];
     devs.forEach(function(el, index){
       users[index] = {
         username : el.login,
@@ -59,20 +60,19 @@ app.get('/org/:org/users', function (req, res) {
       };
     });
 
-    var lastPage = parsePage(response.headers.link);
+    var islastPage;
+    if(users.length > 0) islastPage = parsePage(response.headers.link, page);
+    else islastPage = true;
 
-    res.json({developers: users, pagesLeft: lastPage > page});
+    res.json({developers: users, pagesLeft: islastPage});
   });
 
-  function parsePage(url) {
-    var link = url;
-    link = link.split('<')[2].split('>')[0];
-
-    var params = link.split('?')[1];
-
+  function parsePage(url, currentPage) {
+    url = url.split('<')[2].split('>')[0];
+    var params = url.split('?')[1];
     var lastPage = params.split('&')[0].split('=')[1];
 
-    return lastPage;
+    return lastPage > currentPage;
   }
 
 });
