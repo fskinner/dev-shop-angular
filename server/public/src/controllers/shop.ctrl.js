@@ -14,7 +14,6 @@
 
         addToTotal(totalDevPrice);
       }
-
     };
 
     this.addFromInput = function() {
@@ -37,18 +36,26 @@
       vm.total -= parseInt(totalDevPrice, 10);
     };
 
-    this.getDeveloperList = function() {
-      ShopSvc.get(vm.page).then(function(result){
-        result.data.developers.map(function(item){
-          item.photo = 'img/'+item.photo;
-          item.hours = 8;
-          return item;
-        });
+    this.loadNextPage = function() {
+      ++vm.page;
+
+      ShopSvc.get(vm.organization, vm.page, vm.pageSize).then(function(result){
+        handleDevList(result);
 
         vm.hireDevelopers = vm.hireDevelopers.concat(result.data.developers);
         vm.hasMorePages = result.data.pagesLeft;
       });
-      vm.page++;
+    };
+
+    this.getDeveloperList = function() {
+      vm.page = 1;
+
+      ShopSvc.get(vm.organization, vm.page, vm.pageSize).then(function(result){
+        handleDevList(result);
+
+        vm.hireDevelopers = result.data.developers;
+        vm.hasMorePages = result.data.pagesLeft;
+      });
     };
 
     function init() {
@@ -57,6 +64,8 @@
       vm.total = 0;
       vm.hasMorePages = false;
       vm.page = 1;
+      vm.pageSize = 5;
+      vm.organization = '';
 
       clearInputFields();
       vm.getDeveloperList();
@@ -69,6 +78,17 @@
 
     function addToTotal(value) {
       vm.total += parseInt(value, 10);
+    }
+
+    function handleDevList(devs) {
+      devs.data.developers.map(function(item){
+        if(item.photo === '') item.photo = 'img/default.png';
+
+        item.hours = 8;
+        return item;
+      });
+
+      return devs;
     }
 
     init();

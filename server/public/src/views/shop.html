@@ -1,5 +1,13 @@
 <h1 class="lead">Add a developer</h1>
 
+<form class="form-inline" ng-submit="shop.getDeveloperList()">
+  <div class="form-group">
+    <label for="githubOrganization">Filter by organization</label>
+    <input type="text" class="form-control" id="githubOrganization" placeholder="GitHub Organization" ng-model="shop.organization" ng-model-options="{ debounce: 250 }">
+  </div>
+  <button type="submit" class="btn btn-success">Filter</button>
+</form>
+
 <div class="top-offset-20" ng-if="shop.hireDevelopers.length > 0">
   <table class="table table-hover">
     <thead>
@@ -24,7 +32,7 @@
       </tr>
     </tbody>
   </table>
-  <button type="button" class="btn btn-default btn-lg center-block" ng-show="shop.hasMorePages" ng-click="shop.getDeveloperList()">Load more</button>
+  <button type="button" class="btn btn-default btn-lg center-block" ng-show="shop.hasMorePages" ng-click="shop.loadNextPage()">Load more</button>
 </div>
 
 <div class="top-offset-20" ng-if="shop.hireDevelopers.length === 0">
