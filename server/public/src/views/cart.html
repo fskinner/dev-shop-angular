@@ -21,7 +21,11 @@
       <tr>
         <td>Total</td>
         <td></td>
-        <td>${{shop.total}}</td>
+        <td>${{shop.total}} <span ng-show="shop.redeemed">(with 10% discount)</span></td>
+        <td>
+          <input type="text" placeholder="Discount voucher" ng-model="shop.voucher" ng-model-options="{ debounce: 150 }">
+          <button type="button" ng-click="shop.validateVoucher()" class="btn btn-success" ng-hide="shop.redeemed">Redeem</button>
+        </td>
         <td><a href="/checkout" class="btn btn-primary btn-lg pull-right">Proceed to Checkout</button></td>
       </tr>
     </tfoot>

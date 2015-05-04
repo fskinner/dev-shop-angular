@@ -11,8 +11,6 @@
         developer.onCart = true;
 
         var totalDevPrice = developer.price * developer.hours;
-
-        addToTotal(totalDevPrice);
       }
     };
 
@@ -23,8 +21,6 @@
 
       vm.developers.push(developer);
       clearInputFields();
-
-      addToTotal(developer.price);
     };
 
     this.remove = function(developer) {
@@ -55,17 +51,40 @@
 
         vm.hireDevelopers = result.data.developers;
         vm.hasMorePages = result.data.pagesLeft;
+      }, function(){
+        vm.hireDevelopers = [];
+        vm.hasMorePages = false;
       });
+    };
+
+    this.processOrder = function() {
+      vm.total = 0;
+      vm.developers.forEach(function(dev){
+        vm.total += parseInt(dev.price, 10) * parseInt(dev.hours, 10);
+      });
+
+      if(vm.redeemed === true) vm.total = vm.total * 0.9;
+    };
+
+    this.validateVoucher = function() {
+      if(vm.voucher === 'SHIPIT'){
+        vm.total = vm.total * 0.9;
+        vm.redeemed = true;
+      }
     };
 
     function init() {
       vm.hireDevelopers = [];
       vm.developers = [];
+
+      vm.organization = '';
+      vm.voucher = '';
       vm.total = 0;
+      vm.redeemed = false;
+
       vm.hasMorePages = false;
       vm.page = 1;
       vm.pageSize = 5;
-      vm.organization = '';
 
       clearInputFields();
       vm.getDeveloperList();
