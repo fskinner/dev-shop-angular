@@ -4,8 +4,8 @@ var stylish     = require('jshint-stylish');
 var browserSync = require('browser-sync');
 
 var paths = {
-  source: 'server/public/src/**/*.js',
-  html: ['server/public/**/*.html', 'server/public/src/**.*.html']
+  source: 'client/src/**/*.js',
+  html: ['client/**/*.html', 'client/src/**.*.html']
 }
 
 gulp.task('serve', function(done) {

@@ -84,7 +84,7 @@
 
       vm.hasMorePages = false;
       vm.page = 1;
-      vm.pageSize = 5;
+      vm.pageSize = 10;
 
       clearInputFields();
       vm.getDeveloperList();
@@ -100,6 +100,7 @@
     }
 
     function handleDevList(devs) {
+      devs.data.developers = devs.data.developers || [];
       devs.data.developers.map(function(item){
         if(item.photo === '') item.photo = 'img/default.png';
 
