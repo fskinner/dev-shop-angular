@@ -34,4 +34,10 @@ router.delete('/:id', function (req, res) {
   res.sendStatus(400);
 });
 
+router.delete('/', function (req, res) {
+  hired_users = [];
+
+  res.sendStatus(200);
+});
+
 module.exports = router;

@@ -14,5 +14,9 @@
     this.delete = function(id) {
       return $http.delete('/cart/'+id);
     };
+
+    this.clear = function() {
+      return $http.delete('/cart');
+    };
   });
 })();

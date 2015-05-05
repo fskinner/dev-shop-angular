@@ -41,6 +41,15 @@
       vm.calcPrice();
     };
 
+    this.checkout = function() {
+      var oldArray = vm.developers;
+      vm.developers = [];
+
+      CartSvc.clear().catch(function(){
+        vm.developers = oldArray;
+      });
+    };
+
     function init() {
       vm.developers = [];
 

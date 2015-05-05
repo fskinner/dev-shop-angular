@@ -27,7 +27,7 @@
           <button type="button" ng-click="cart.validateVoucher()" class="btn btn-success btn-xs" ng-hide="cart.redeemed">Redeem</button>
           <button type="button" ng-click="cart.removeVoucher()" class="btn btn-default btn-xs" ng-show="cart.redeemed">Remove</button>
         </td>
-        <td><a href="/checkout" class="btn btn-primary btn-lg pull-right">Proceed to Checkout</button></td>
+        <td><a href="/checkout" class="btn btn-primary btn-lg pull-right" ng-click="cart.checkout()">Proceed to Checkout</button></td>
       </tr>
     </tfoot>
   </table>
@@ -37,4 +37,4 @@
   <span>Your cart is empty</span>
 </div>
 
-<a href="/home" class="btn btn-default pull-left top-offset-20 bottom-offset-20">Back to shopping</a>
+<a href="/home" class="btn btn-default pull-left top-offset-20 bottom-offset-20">Continue shopping</a>
