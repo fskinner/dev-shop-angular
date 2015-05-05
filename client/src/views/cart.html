@@ -1,5 +1,5 @@
 <h1 class="lead">Cart</h1>
-<div class="table-responsive" ng-if="shop.developers.length !== 0">
+<div class="table-responsive" ng-if="cart.developers.length !== 0">
   <table class="table table-hover">
     <thead>
       <tr>
@@ -10,21 +10,22 @@
       </tr>
     </thead>
     <tbody>
-      <tr ng-repeat="developer in shop.developers">
+      <tr ng-repeat="developer in cart.developers">
         <td><img src="{{developer.photo}}" height="48" alt="@{{developer.username}}" title="{{developer.username}}'s photo" class="img-rounded"></td>
         <td><a href="https://github.com/{{developer.username}}">{{developer.username}}</a></td>
         <td>${{developer.price * developer.hours}} (${{developer.price}} x {{developer.hours}}h)</td>
-        <td><button type="button" class="btn btn-danger pull-right" ng-click="shop.remove(developer)">Remove</button></td>
+        <td><button type="button" class="btn btn-danger pull-right" ng-click="cart.remove(developer)">Remove</button></td>
       </tr>
     </tbody>
     <tfoot>
       <tr>
         <td>Total</td>
         <td></td>
-        <td>${{shop.total}} <span ng-show="shop.redeemed">(with 10% discount)</span></td>
+        <td>${{cart.total}} <span ng-show="cart.redeemed">(with 10% discount)</span></td>
         <td>
-          <input type="text" placeholder="Discount voucher" ng-model="shop.voucher" ng-model-options="{ debounce: 150 }">
-          <button type="button" ng-click="shop.validateVoucher()" class="btn btn-success" ng-hide="shop.redeemed">Redeem</button>
+          <input type="text" placeholder="Discount voucher" ng-model="cart.voucher" ng-model-options="{ debounce: 150 }">
+          <button type="button" ng-click="cart.validateVoucher()" class="btn btn-success btn-xs" ng-hide="cart.redeemed">Redeem</button>
+          <button type="button" ng-click="cart.removeVoucher()" class="btn btn-default btn-xs" ng-show="cart.redeemed">Remove</button>
         </td>
         <td><a href="/checkout" class="btn btn-primary btn-lg pull-right">Proceed to Checkout</button></td>
       </tr>
@@ -32,7 +33,7 @@
   </table>
 </div>
 
-<div ng-if="shop.developers.length === 0" class="text-center">
+<div ng-if="cart.developers.length === 0" class="text-center">
   <span>Your cart is empty</span>
 </div>
 

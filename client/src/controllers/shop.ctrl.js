@@ -1,46 +1,54 @@
 (function(){
   'use strict';
 
-  angular.module('devshop').controller('ShopCtrl', function(ShopSvc){
+  angular.module('devshop').controller('ShopCtrl', function(CartSvc, ShopSvc){
 
     var vm = this;
+    var id = 0;
 
     this.add = function(developer) {
       if(developer.hours > 0){
-        vm.developers.push(developer);
         developer.onCart = true;
 
-        var totalDevPrice = developer.price * developer.hours;
+        CartSvc.add(developer).catch(function(){
+          developer.onCart = false;
+        });
       }
     };
 
     this.addFromInput = function() {
       var developer = {};
-      developer.username = vm.username;
-      developer.price = vm.price;
+      if(vm.hours > 0){
+        developer.username = vm.username;
+        developer.price = vm.price;
+        developer.hours = vm.hours;
+        developer.id = ++id;
 
-      vm.developers.push(developer);
-      clearInputFields();
+        CartSvc.add(developer);
+
+        clearInputFields();
+      }
     };
 
     this.remove = function(developer) {
-      var index = vm.developers.indexOf(developer);
-      vm.developers.splice(index, 1);
       developer.onCart = false;
 
-      var totalDevPrice = developer.price * developer.hours;
-      vm.total -= parseInt(totalDevPrice, 10);
+      CartSvc.delete(developer.id).catch(function(){
+        developer.onCart = true;
+      });
     };
 
     this.loadNextPage = function() {
-      ++vm.page;
+      if(!vm.lastPage) {
+        ++vm.page;
 
-      ShopSvc.get(vm.organization, vm.page, vm.pageSize).then(function(result){
-        handleDevList(result);
+        ShopSvc.get(vm.organization, vm.page, vm.pageSize).then(function(result){
+          handleDevList(result);
 
-        vm.hireDevelopers = vm.hireDevelopers.concat(result.data.developers);
-        vm.hasMorePages = result.data.pagesLeft;
-      });
+          vm.developers = vm.developers.concat(result.data.developers);
+          vm.lastPage = result.data.lastPage;
+        });
+      }
     };
 
     this.getDeveloperList = function() {
@@ -49,40 +57,19 @@
       ShopSvc.get(vm.organization, vm.page, vm.pageSize).then(function(result){
         handleDevList(result);
 
-        vm.hireDevelopers = result.data.developers;
-        vm.hasMorePages = result.data.pagesLeft;
+        vm.developers = result.data.developers;
+        vm.lastPage = result.data.lastPage;
       }, function(){
-        vm.hireDevelopers = [];
-        vm.hasMorePages = false;
+        vm.developers = [];
+        vm.lastPage = true;
       });
-    };
-
-    this.processOrder = function() {
-      vm.total = 0;
-      vm.developers.forEach(function(dev){
-        vm.total += parseInt(dev.price, 10) * parseInt(dev.hours, 10);
-      });
-
-      if(vm.redeemed === true) vm.total = vm.total * 0.9;
-    };
-
-    this.validateVoucher = function() {
-      if(vm.voucher === 'SHIPIT'){
-        vm.total = vm.total * 0.9;
-        vm.redeemed = true;
-      }
     };
 
     function init() {
-      vm.hireDevelopers = [];
       vm.developers = [];
-
       vm.organization = '';
-      vm.voucher = '';
-      vm.total = 0;
-      vm.redeemed = false;
 
-      vm.hasMorePages = false;
+      vm.lastPage = true;
       vm.page = 1;
       vm.pageSize = 10;
 
@@ -93,10 +80,7 @@
     function clearInputFields() {
       vm.username = '';
       vm.price = '';
-    }
-
-    function addToTotal(value) {
-      vm.total += parseInt(value, 10);
+      vm.hours = 0;
     }
 
     function handleDevList(devs) {

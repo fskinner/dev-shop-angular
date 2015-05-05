@@ -3,60 +3,38 @@ var router = express.Router();
 
 function initUsers() {
   users = [
-    {username: "joao",    price: "100", photo: ""},
-    {username: "jorge",   price: "121", photo: ""},
-    {username: "pedro",   price: "97",  photo: ""},
-    {username: "paulo",   price: "290", photo: ""},
-    {username: "tom",     price: "111", photo: ""},
-    {username: "tomas",   price: "22",  photo: ""},
-    {username: "thiago",  price: "35",  photo: ""},
-    {username: "tereza",  price: "198", photo: ""},
-    {username: "sofia",   price: "230", photo: ""},
-    {username: "luke",    price: "210", photo: ""},
-    {username: "maria",   price: "100", photo: ""},
-    {username: "eduarda", price: "121", photo: ""},
-    {username: "renato",  price: "97",  photo: ""},
-    {username: "flavio",  price: "290", photo: ""},
-    {username: "alex",    price: "111", photo: ""},
-    {username: "tobias",  price: "22",  photo: ""},
-    {username: "daniel",  price: "35",  photo: ""},
-    {username: "pelé",    price: "198", photo: ""},
-    {username: "orlando", price: "230", photo: ""},
-    {username: "léia",    price: "210", photo: ""}
+    {id: 1041,    username: "joao",    price: "100", photo: ""},
+    {id: 20073,   username: "jorge",   price: "121", photo: ""},
+    {id: 2248,    username: "pedro",   price: "97",  photo: ""},
+    {id: 4660,    username: "paulo",   price: "290", photo: ""},
+    {id: 748,     username: "tom",     price: "111", photo: ""},
+    {id: 10574,   username: "tomas",   price: "22",  photo: ""},
+    {id: 14319,   username: "thiago",  price: "35",  photo: ""},
+    {id: 145949,  username: "tereza",  price: "198", photo: ""},
+    {id: 15557,   username: "sofia",   price: "230", photo: ""},
+    {id: 322,     username: "luke",    price: "210", photo: ""},
+    {id: 1681405, username: "maria",   price: "100", photo: ""},
+    {id: 2823287, username: "eduarda", price: "121", photo: ""},
+    {id: 3530,    username: "renato",  price: "97",  photo: ""},
+    {id: 22728,   username: "flavio",  price: "290", photo: ""},
+    {id: 772,     username: "alex",    price: "111", photo: ""},
+    {id: 2631,    username: "tobias",  price: "22",  photo: ""},
+    {id: 635,     username: "daniel",  price: "35",  photo: ""},
+    {id: 676210,  username: "pele",    price: "198", photo: ""},
+    {id: 849872,  username: "orlando", price: "230", photo: ""},
+    {id: 192618,  username: "leia",    price: "210", photo: ""}
   ];
 }
 
-router.post('/', function (req, res) {
-  var newUser = req.body.user;
-  newUser.id = currentId++;
-  users.push(newUser);
-
-  res.sendStatus(201);
-});
-
 router.get('/', function(req, res, next) {
   initUsers();
-
-  var page = req.query.page - 1 || 0;
-  var perPage = req.query.per_page || 10;
-  var current = page*perPage;
+  var page = parseInt(req.query.page, 10) || 1;
+  var perPage = parseInt(req.query.per_page, 10) || 10;
+  var current = (page - 1)*perPage;
 
   var usersPage = users.slice(current, perPage + current);
 
-  res.json({developers: usersPage, pagesLeft: perPage + current < users.length});
-});
-
-router.delete('/:id', function (req, res) {
-  var id = req.params.id;
-
-  for(var i = 0, len = messages.length; i<len; i++){
-    if(messages[i].id == id) {
-        messages.splice(i, 1);
-        return res.sendStatus(200);
-    }
-  }
-
-  res.sendStatus(400);
+  res.json({developers: usersPage, lastPage: perPage + current >= users.length});
 });
 
 module.exports = router;
