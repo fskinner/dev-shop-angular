@@ -5,8 +5,15 @@ var hired_users = [];
 
 router.post('/', function (req, res) {
   var user = req.body.user;
-  hired_users.push(user);
 
+  for(var i = 0, len = hired_users.length; i<len; i++){
+    if(hired_users[i].id == user.id) {
+      hired_users[i].hours += user.hours;
+        return res.sendStatus(200);
+    }
+  }
+
+  hired_users.push(user);
   res.sendStatus(201);
 });
 
