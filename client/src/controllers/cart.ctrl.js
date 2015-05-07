@@ -1,21 +1,20 @@
 (function(){
   'use strict';
 
-  angular.module('devshop').controller('CartCtrl', function(CartSvc){
+  angular.module('devshop').controller('CartCtrl', ['CartSvc', function(cartSvc){
 
     var vm = this;
 
     this.remove = function(developer) {
       var index = vm.developers.indexOf(developer);
-      var oldArray = vm.developers;
       vm.developers.splice(index, 1);
       developer.onCart = false;
 
-      CartSvc.delete(developer.id).then(function(){
+      cartSvc.delete(developer.id).then(function(){
         vm.calcPrice();
       }).catch(function(){
         developer.onCart = true;
-        vm.developers = oldArray;
+        vm.developers.splice(index, 0, developer);
       });
     };
 
@@ -45,7 +44,7 @@
       var oldArray = vm.developers;
       vm.developers = [];
 
-      CartSvc.clear().catch(function(){
+      cartSvc.clear().catch(function(){
         vm.developers = oldArray;
       });
     };
@@ -61,7 +60,7 @@
     }
 
     function getCart() {
-      CartSvc.get().then(function(result){
+      cartSvc.get().then(function(result){
         vm.developers = result.data;
         vm.calcPrice();
       });
@@ -69,5 +68,5 @@
 
     init();
 
-  });
+  }]);
 })();

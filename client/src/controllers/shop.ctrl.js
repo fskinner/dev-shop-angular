@@ -1,7 +1,7 @@
 (function(){
   'use strict';
 
-  angular.module('devshop').controller('ShopCtrl', function(CartSvc, ShopSvc){
+  angular.module('devshop').controller('ShopCtrl', ['CartSvc', 'ShopSvc', function(cartSvc, shopSvc){
 
     var vm = this;
     var id = 0;
@@ -10,7 +10,7 @@
       if(developer.hours > 0){
         developer.onCart = true;
 
-        CartSvc.add(developer).catch(function(){
+        cartSvc.add(developer).catch(function(){
           developer.onCart = false;
         });
       }
@@ -24,7 +24,7 @@
         developer.hours = vm.hours;
         developer.id = ++id;
 
-        CartSvc.add(developer);
+        cartSvc.add(developer);
 
         clearInputFields();
       }
@@ -33,7 +33,7 @@
     this.remove = function(developer) {
       developer.onCart = false;
 
-      CartSvc.delete(developer.id).catch(function(){
+      cartSvc.delete(developer.id).catch(function(){
         developer.onCart = true;
       });
     };
@@ -42,7 +42,7 @@
       if(!vm.lastPage) {
         ++vm.page;
 
-        ShopSvc.get(vm.organization, vm.page, vm.pageSize).then(function(result){
+        shopSvc.get(vm.organization, vm.page, vm.pageSize).then(function(result){
           handleDevList(result);
 
           vm.developers = vm.developers.concat(result.data.developers);
@@ -54,7 +54,7 @@
     this.getDeveloperList = function() {
       vm.page = 1;
 
-      ShopSvc.get(vm.organization, vm.page, vm.pageSize).then(function(result){
+      shopSvc.get(vm.organization, vm.page, vm.pageSize).then(function(result){
         handleDevList(result);
 
         vm.developers = result.data.developers;
@@ -80,7 +80,7 @@
     function clearInputFields() {
       vm.username = '';
       vm.price = '';
-      vm.hours = 0;
+      vm.hours = 8;
     }
 
     function handleDevList(devs) {
@@ -97,5 +97,5 @@
 
     init();
 
-  });
+  }]);
 })();

@@ -10,9 +10,6 @@ var users_route = require('./api/users');
 var orgs_route  = require('./api/orgs');
 var cart_route  = require('./api/cart');
 
-var users       = [];
-var hired_users = [];
-
 app.use(express.static(__dirname + '/client'));
 app.use(bodyParser.urlencoded({'extended':'true'}));            // parse application/x-www-form-urlencoded
 app.use(bodyParser.json());                                     // parse application/json

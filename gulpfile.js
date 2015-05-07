@@ -2,9 +2,11 @@ var gulp        = require('gulp');
 var jshint      = require('gulp-jshint');
 var stylish     = require('jshint-stylish');
 var browserSync = require('browser-sync');
+var karma       = require('gulp-karma');
 
 var paths = {
   source: 'client/src/**/*.js',
+  test: 'client/test/*.spec.js',
   html: ['client/**/*.html', 'client/src/**.*.html']
 }
 
@@ -28,4 +30,12 @@ gulp.task('lint', function() {
   return gulp.src(paths.source)
     .pipe(jshint())
     .pipe(jshint.reporter(stylish));
+});
+
+gulp.task('test', function() {
+  return gulp.src('./foo')
+    .pipe(karma({
+      configFile: 'client/karma.conf.js',
+      action: 'run'
+    }));
 });
