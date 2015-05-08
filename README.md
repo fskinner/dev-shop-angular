@@ -13,3 +13,8 @@
 ## Web
 
 You can view the project up and running on [Heroku](https://fskinner-dev-shop.herokuapp.com)
+
+## Testing
+
+- FrontEnd: gulp test
+- BackEnd: npm test

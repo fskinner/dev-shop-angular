@@ -11,9 +11,11 @@ var orgs_route  = require('./api/orgs');
 var cart_route  = require('./api/cart');
 
 app.use(express.static(__dirname + '/client'));
+
 app.use(bodyParser.urlencoded({'extended':'true'}));            // parse application/x-www-form-urlencoded
 app.use(bodyParser.json());                                     // parse application/json
 app.use(bodyParser.json({ type: 'application/vnd.api+json' })); // parse application/vnd.api+json as json
+
 app.use('/', router);
 
 app.use(function(req, res, next) {
