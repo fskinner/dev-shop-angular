@@ -1,4 +1,4 @@
-# Dev Shop [![Dependency Status](https://gemnasium.com/fskinner/dev-shop-backend.svg)](https://gemnasium.com/fskinner/dev-shop-backend) [![Build Status](https://travis-ci.org/fskinner/dev-shop-backend.svg?branch=master)](https://travis-ci.org/fskinner/dev-shop-backend)
+# Dev Shop [![Dependency Status](https://gemnasium.com/fskinner/dev-shop-backend.svg)](https://gemnasium.com/fskinner/dev-shop-backend) [![Build Status](https://travis-ci.org/fskinner/dev-shop-backend.svg?branch=master)](https://travis-ci.org/fskinner/dev-shop-backend) [![Code Climate](https://codeclimate.com/github/fskinner/dev-shop-backend/badges/gpa.svg)](https://codeclimate.com/github/fskinner/dev-shop-backend)
 
 ## Install
 
