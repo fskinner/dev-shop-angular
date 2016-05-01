@@ -1,38 +1,34 @@
 (function(){
   'use strict';
 
-  angular.module('devshop').controller('CartCtrl', ['CartSvc', function(cartSvc){
+  angular.module('devshop').controller('CartCtrl', ['CartSvc', function(cartSvc) {
 
-    var vm = this;
+    let vm = this;
 
     this.remove = function(developer) {
       var oldArray = vm.developers;
-
-      vm.developers = vm.developers.filter(function(dev) {
-        return dev.id !== developer.id;
-      });
-
+      vm.developers = vm.developers.filter(dev =>  dev.id !== developer.id);
       developer.onCart = false;
 
-      cartSvc.delete(developer.id).then(function(){
-        vm.calcPrice();
-      }).catch(function(){
-        developer.onCart = true;
-        vm.developers = oldArray;
-      });
+      cartSvc.delete(developer.id).then(() => vm.calcPrice())
+        .catch(() => {
+          developer.onCart = true;
+          vm.developers = oldArray;
+        });
     };
 
     this.calcPrice = function() {
-      vm.total = 0;
-      vm.developers.forEach(function(dev){
-        vm.total += parseInt(dev.price, 10) * parseInt(dev.hours, 10);
-      });
+      vm.total = vm.developers.reduce((total, dev) => total + (parseInt(dev.price, 10) * parseInt(dev.hours, 10)));
 
-      if(vm.redeemed === true) vm.total = vm.total * 0.9;
+      if(vm.redeemed === true) {
+        vm.total = vm.total * 0.9;
+      }
     };
 
     this.validateVoucher = function() {
-      if(vm.voucher === 'SHIPIT') vm.redeemed = true;
+      if(vm.voucher === 'SHIPIT') {
+        vm.redeemed = true;
+      }
 
       vm.calcPrice();
     };
@@ -48,9 +44,7 @@
       var oldArray = vm.developers;
       vm.developers = [];
 
-      cartSvc.clear().catch(function(){
-        vm.developers = oldArray;
-      });
+      cartSvc.clear().catch(() => vm.developers = oldArray);
     };
 
     function init() {
@@ -64,7 +58,7 @@
     }
 
     function getCart() {
-      cartSvc.get().then(function(result){
+      cartSvc.get().then((result) => {
         vm.developers = result.data;
         vm.calcPrice();
       });

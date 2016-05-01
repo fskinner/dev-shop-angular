@@ -1,28 +1,27 @@
 (function(){
   'use strict';
 
-  angular.module('devshop').controller('ShopCtrl', ['CartSvc', 'ShopSvc', function(cartSvc, shopSvc){
+  angular.module('devshop').controller('ShopCtrl', ['CartSvc', 'ShopSvc', function(cartSvc, shopSvc) {
 
-    var vm = this;
-    var id = 0;
+    let vm = this;
+    let id = 0;
 
     this.add = function(developer) {
       if(developer.hours > 0){
         developer.onCart = true;
 
-        cartSvc.add(developer).catch(function(){
-          developer.onCart = false;
-        });
+        cartSvc.add(developer).catch(() => developer.onCart = false);
       }
     };
 
     this.addFromInput = function() {
+      const { username, price, hours } = vm;
       if(vm.hours > 0){
         var developer = {
-          username: vm.username,
-          price: vm.price,
-          hours: vm.hours,
-          id: ++id
+          id: ++id,
+          username,
+          price,
+          hours
         };
 
         cartSvc.add(developer);
@@ -34,19 +33,17 @@
     this.remove = function(developer) {
       developer.onCart = false;
 
-      cartSvc.delete(developer.id).catch(function(){
-        developer.onCart = true;
-      });
+      cartSvc.delete(developer.id).catch(() => developer.onCart = true);
     };
 
     this.loadNextPage = function() {
       if(!vm.lastPage) {
         ++vm.page;
 
-        shopSvc.get(vm.organization, vm.page, vm.pageSize).then(function(result){
+        shopSvc.get(vm.organization, vm.page, vm.pageSize).then((result) => {
           handleDevList(result);
 
-          vm.developers = vm.developers.concat(result.data.developers);
+          vm.developers = [ ...vm.developers, ...result.data.developers];
           vm.lastPage = result.data.lastPage;
         });
       }
@@ -55,12 +52,12 @@
     this.getDeveloperList = function() {
       vm.page = 1;
 
-      shopSvc.get(vm.organization, vm.page, vm.pageSize).then(function(result){
+      shopSvc.get(vm.organization, vm.page, vm.pageSize).then((result) => {
         handleDevList(result);
 
         vm.developers = result.data.developers;
         vm.lastPage = result.data.lastPage;
-      }, function(){
+      }, () => {
         vm.developers = [];
         vm.lastPage = true;
       });
@@ -86,7 +83,7 @@
 
     function handleDevList(devs) {
       devs.data.developers = devs.data.developers || [];
-      devs.data.developers.map(function(item){
+      devs.data.developers.map((item) => {
         item.hours = 8;
         if(item.photo === '') {
           item.photo = 'img/default.png';
