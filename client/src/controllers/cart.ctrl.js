@@ -6,15 +6,19 @@
     var vm = this;
 
     this.remove = function(developer) {
-      var index = vm.developers.indexOf(developer);
-      vm.developers.splice(index, 1);
+      var oldArray = vm.developers;
+
+      vm.developers = vm.developers.filter(function(dev) {
+        return dev.id !== developer.id;
+      });
+
       developer.onCart = false;
 
       cartSvc.delete(developer.id).then(function(){
         vm.calcPrice();
       }).catch(function(){
         developer.onCart = true;
-        vm.developers.splice(index, 0, developer);
+        vm.developers = oldArray;
       });
     };
 

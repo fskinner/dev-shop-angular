@@ -17,12 +17,13 @@
     };
 
     this.addFromInput = function() {
-      var developer = {};
       if(vm.hours > 0){
-        developer.username = vm.username;
-        developer.price = vm.price;
-        developer.hours = vm.hours;
-        developer.id = ++id;
+        var developer = {
+          username: vm.username,
+          price: vm.price,
+          hours: vm.hours,
+          id: ++id
+        };
 
         cartSvc.add(developer);
 
@@ -86,9 +87,11 @@
     function handleDevList(devs) {
       devs.data.developers = devs.data.developers || [];
       devs.data.developers.map(function(item){
-        if(item.photo === '') item.photo = 'img/default.png';
-
         item.hours = 8;
+        if(item.photo === '') {
+          item.photo = 'img/default.png';
+        }
+
         return item;
       });
 
